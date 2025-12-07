@@ -3,8 +3,8 @@
 WiFiServer server(80);
 
 int internal_led = 4;
-const char* ssid = "WiFi-Arnet-541y";
-const char* psswd = "9yyC4vzTUqzn9";
+const char* ssid = "ssid";
+const char* psswd = "***********";
 int count = 0;
 String header;
 
@@ -69,3 +69,4 @@ void loop() {
   }
   // put your main code here, to run repeatedly
 }
+
