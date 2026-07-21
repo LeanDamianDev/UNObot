@@ -1,2 +1,2 @@
-# Arduino projects
-Un robot basico con Arduino Uno
+# UNObot 
+Un robot basico con Arduino Uno capaz de evitar obstaculos con sensor ultrasonico
