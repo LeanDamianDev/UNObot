@@ -3,6 +3,6 @@ Un robot basico con Arduino Uno capaz de evitar obstaculos con sensor ultrasonic
 
 Para este proyecto se va a necesitar un chasis 2wd que se puede conseguir facilmente por internet. 
 
-![](https://www.google.com/search?sca_esv=cca1b41c82a3633f&sxsrf=APpeQnsraG4OFe04X8OfBR-dy_gWBc_2Ag:1784936747203&udm=2&fbs=ABfTbFUDadgeu2mn4mYJ8iEZ1GUDd8ABuXxNzQEi57SWOuuPdScLx3ol9c1cFkljSkR7a92zI41_RsweK3CN3tjl5tPsgmcPtMZG1Glpg6Wtex4blsIMMnCid2T8x0r_a7pHPddIpMhAkl2JGK1S7zZ6Ighgh2H4pGdCiJAJuKJWW15P-tkOV95Qoe5RBJFzndaERfd6IUAR0Eyi3usaAn6Xg5E4IMUDNjL3JLkcISEoh5fVJJiwqcA&q=chasis+robot+2wd&sa=X&ved=2ahUKEwiPsI3Gv-yVAxWhEbkGHYK5MJgQtKgLegQIFBAB&biw=1362&bih=645&dpr=1.41#sv=CAMSXhoyKhBlLXV5ZmJ2bjJUaTA2WFJNMg51eWZidm4yVGkwNlhSTToOQkNJTUxnNndaajFoZ00gBCokCg55Ym9BVUUxeW9pb25zTRIQZS11eWZidm4yVGkwNlhSTRgAMAEYByCXmf-JDkoIEAEYASABKAE)
+![](https://www.teslaelectronic.com.pe/wp-content/uploads/2023/03/2WD-Car4.png)
 
 
