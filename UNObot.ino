@@ -1,103 +1,154 @@
-/* Robot UNObot 
-  Componentes Usados:
-  - Arduino Uno
-  - Portapilas 18650 x2 serie
-  - x2 pilas 18650
-  - modulo driver l298n
-  - 1 servo sg90
-  - 1 sensor ultrasonico hc-sr04
-*/
 #include <Servo.h>
 
-// Pines Motores L298N
-const int IN1 = 2; const int IN2 = 3;
-const int IN3 = 4; const int IN4 = 5; 
+Servo servo;
 
-// Pines Ultrasonico HC-SR04
+// Pines PWM para el control de velocidad de motores
+const int IN1 = 3;  // Motor Izquierdo avance
+const int IN2 = 5;  // Motor Izquierdo retroceso
+const int IN3 = 6;  // Motor Derecho avance
+const int IN4 = 11; // Motor Derecho retroceso
+
+// Pines del sensor ultrasónico HC-SR04
 const int pinTrigger = 8;
 const int pinEcho = 9;
 
-// Servo
-Servo miServo;
-const int pinServo = 4;
-
-// Configuración de distancia límite
-const int distanciaObstaculo = 20; // cm
+// Configuración de velocidad PWM (0 a 255)
+int velocidad = 130; 
 
 void setup() {
-  // Configurar motores
-  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
-  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
   
-  // Configurar ultrasonico
+  servo.attach(12);
+  
   pinMode(pinTrigger, OUTPUT);
   pinMode(pinEcho, INPUT);
-  digitalWrite(pinTrigger, LOW);
-  // Configurar servo
-  miServo.attach(pinServo);
-  miServo.write(90); 
   
-  delay(1000); 
+  // Posición inicial: mirando al frente
+  servo.write(90);
+  delay(500);
 }
-// Función para obtener la distancia 
-int obtenerDistancia() {
-  digitalWrite(pinTrigger, HIGH); // dispara el trigger
-  delayMicroseconds(10);
-  digitalWrite(pinTrigger, LOW);
-  
-  long duracion = pulseIn(pinEcho, HIGH, 30000); // escucha echo
-  if (duracion == 0) return 999; 
-  
-  return duracion / 59; // conversión de la distancia obtenida 
-}
+
 void loop() {
-  int distanciaAlFrente = obtenerDistancia();
+  int distanciaFrente = MedirDistanciaPrecisa();
 
-  // Condición para reaccionar frente un obstaculo dependiendo de su distacia
-  if (distanciaAlFrente <= distanciaObstaculo && distanciaAlFrente > 0) {
-    quedarseQuieto();
-    delay(500);
-    miServo.write(0);
-    delay(1000);
-    miServo.write(90);
-    delay(1000);
-    miServo.write(180);
-    moverAtras();
-    delay(600); 
-    quedarseQuieto();
+  if (distanciaFrente < 20) {
+    Stop();
     delay(300);
-
-    girarDerecha();
-    delay(500);
-    quedarseQuieto();
-    delay(300);
-   } else {
     
-   moverAdelante();
+    // Retrocede un poco para despejar espacio
+    Retroceder();
+    delay(400);
+    Stop();
+    delay(300);
+    
+    // Escanea ambos lados usando el servomotor
+    int distanciaIzquierda = MirarIzquierda();
+    int distanciaDerecha = MirarDerecha();
+    
+    // Vuelve al frente
+    servo.write(90);
+    delay(300);
+
+    // Decide la mejor ruta según el lado con mayor espacio libre
+    if (distanciaIzquierda > distanciaDerecha) {
+      GirarIzquierda();
+      delay(500);
+    } else {
+      GirarDerecha();
+      delay(500);
+    }
+    
+    Stop();
+    delay(200);
+  } 
+  else {
+    Avanzar();  
   }
-  delay(50); 
 }
 
+// --- MEDICIÓN CON FILTRADO DE MEDIANA Y LECTURA PRECISA ---
+int MedirDistanciaPrecisa() {
+  const int MUESTRAS = 5;
+  long sumaDuraciones = 0;
+  int lecturasValidas = 0;
 
+  for (int i = 0; i < MUESTRAS; i++) {
+    digitalWrite(pinTrigger, LOW);
+    delayMicroseconds(2);
+    digitalWrite(pinTrigger, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(pinTrigger, LOW);
+    
+    long duracion = pulseIn(pinEcho, HIGH, 25000); // Timeout ~4 metros
+    
+    if (duracion > 0) {
+      sumaDuraciones += duracion;
+      lecturasValidas++;
+    }
+    delayMicroseconds(500); // Breve pausa entre pulso y pulso
+  }
 
-void moverAdelante() {
+  if (lecturasValidas == 0) {
+    return 999; // Retorna valor alto si no hubo ecos válidos
+  }
 
-  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);  
-  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW); 
-}   
-
-void moverAtras() {
-  digitalWrite(IN1, LOW);  digitalWrite(IN2, HIGH); 
-  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);  
+  long promedioDuracion = sumaDuraciones / lecturasValidas;
+  
+  // Fórmula precisa: distancia = (duración * 0.0343) / 2
+  // Que equivale a: duración / 58.3
+  return (int)(promedioDuracion / 58.3);
 }
 
-void girarDerecha() {
-
-  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);  
-  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);  
+// --- FUNCIONES DE ESCANEO DEL SERVO ---
+int MirarIzquierda() {
+  servo.write(160);
+  delay(400); // Tiempo para que el servo llegue a la posición
+  int dist = MedirDistanciaPrecisa();
+  return dist;
 }
 
-void quedarseQuieto() {
-  digitalWrite(IN1, LOW); digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW); digitalWrite(IN4, LOW);
+int MirarDerecha() {
+  servo.write(20);
+  delay(400);
+  int dist = MedirDistanciaPrecisa();
+  return dist;
+}
+
+// --- FUNCIONES DE MOVIMIENTO CON CONTROL PWM ---
+void Avanzar() {
+  analogWrite(IN1, velocidad);
+  digitalWrite(IN2, LOW);
+  analogWrite(IN3, velocidad);
+  digitalWrite(IN4, LOW);
+}
+
+void Retroceder() {
+  digitalWrite(IN1, LOW);
+  analogWrite(IN2, velocidad);
+  digitalWrite(IN3, LOW);
+  analogWrite(IN4, velocidad);
+}
+
+void GirarDerecha() {
+  digitalWrite(IN1, LOW);
+  analogWrite(IN2, velocidad);
+  analogWrite(IN3, velocidad);
+  digitalWrite(IN4, LOW);
+}
+
+void GirarIzquierda() {
+  analogWrite(IN1, velocidad);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  analogWrite(IN4, velocidad);
+}
+
+void Stop() {
+  analogWrite(IN1, 0);
+  analogWrite(IN2, 0);
+  analogWrite(IN3, 0);
+  analogWrite(IN4, 0);
 }
