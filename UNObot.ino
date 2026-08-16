@@ -52,11 +52,12 @@ void loop() {
     servo.write(90);
     delay(300);
 
-    // Decide la mejor ruta según el lado con mayor espacio libre
-    if (distanciaIzquierda > distanciaDerecha) {
+    // Decide la mejor ruta según el lado con ayor espacio libre
+    if (distanciaIzquierda > distanciaDerecha)  {
       GirarIzquierda();
       delay(500);
-    } else {
+    } else if (distanciaDerecha > distanciaIzquierda) 
+    {
       GirarDerecha();
       delay(500);
     }
