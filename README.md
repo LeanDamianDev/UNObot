@@ -50,4 +50,12 @@ Para programar el robot vamos a necesitar un entorno de desarrollo basado en Ard
 
 <img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/52a7091c-877f-4b2e-8aad-cabd67757b62" />
 
- 
+<h1>Configuración del entorno</h1>
+
+Una vez que tengamos instalado el IDE lo abrimos y procedemos a configurar la placa Arduino UNO 
+
+<img width="1916" height="210" alt="image" src="https://github.com/user-attachments/assets/95ee1423-7b08-405f-b0b2-532618c1cc79" />
+<img width="582" height="415" alt="image" src="https://github.com/user-attachments/assets/613d3333-919a-4acc-8274-85e74fd6ce34" />
+
+
+
