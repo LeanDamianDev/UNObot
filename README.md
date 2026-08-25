@@ -38,3 +38,4 @@ y por ultimo un protoboard para facilitar las conexiones
 
 # Comenzando
 Para comenzar tenemos que hacer las conexiones necesarias para que el funcionamiento del robot sea el optimo
+<img width="3590" height="1985" alt="UNObot diagram" src="https://github.com/user-attachments/assets/25c66bd7-3b08-4f3e-905c-4052a4af8cda" />
