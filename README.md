@@ -1,5 +1,5 @@
 # UNObot 
-Este proyecto se trata de un robot basico con Arduino Uno capaz de evitar obstaculos con sensor ultrasonico, es un proyecto ideal para comenzar en el mundo de la robotica
+Este proyecto se trata de un robot basico con Arduino Uno capaz de evitar obstaculos con sensor ultrasonico y un motor driver L298N que generalmente es el mas usado para proyectos educativos aunque reconozco que actualmente hay drivers mas eficientes pero es un proyecto ideal para comenzar en el mundo de la robotica
 
 Para este proyecto se va a necesitar un chasis 2wd que se puede conseguir facilmente por internet.
 
@@ -36,6 +36,10 @@ y por ultimo un protoboard para facilitar las conexiones
 
 ![](https://dcdn-us.mitiendanube.com/stores/648/727/products/oky0005-breadboard-11-6942049fe8d566d09915287576013319-640-0.webp)
 
+
+
 # Comenzando
-Para comenzar tenemos que hacer las conexiones necesarias para que el funcionamiento del robot sea el optimo
+
+Para comenzar tenemos que hacer las conexiones necesarias para que el funcionamiento del robot sea el optimo, yo personalmente use fritzing para hacer el diagramado mas facil ya que tiene la funcionalidad de agregar componentes personalizados al circuito.
+
 <img width="3590" height="1985" alt="UNObot diagram" src="https://github.com/user-attachments/assets/25c66bd7-3b08-4f3e-905c-4052a4af8cda" />
