@@ -57,5 +57,7 @@ Una vez que tengamos instalado el IDE lo abrimos y procedemos a configurar la pl
 <img width="1916" height="210" alt="image" src="https://github.com/user-attachments/assets/95ee1423-7b08-405f-b0b2-532618c1cc79" />
 <img width="582" height="415" alt="image" src="https://github.com/user-attachments/assets/613d3333-919a-4acc-8274-85e74fd6ce34" />
 
+En caso de que no aparezca el arduino en algun puerto serie COM utilizaremos un programa adicional para instalar el driver que es necesario en caso de que el arduino sea clon  https://www.geekfactory.mx/tutoriales-arduino/driver-ch340-para-arduino-chinos-o-genericos/?srsltid=AfmBOorHDHxkRfxt2n8idLw8O_7kmCPBaavJfe-5GAWVcD_2bNHU14v9 
+<img width="494" height="328" alt="image" src="https://github.com/user-attachments/assets/07321ca3-f296-418f-9cf9-1e8d992b66da" />
 
 
