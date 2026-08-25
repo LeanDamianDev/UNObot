@@ -60,4 +60,14 @@ Una vez que tengamos instalado el IDE lo abrimos y procedemos a configurar la pl
 En caso de que no aparezca el arduino en algun puerto serie COM utilizaremos un programa adicional para instalar el driver que es necesario en caso de que el arduino sea clon  https://www.geekfactory.mx/tutoriales-arduino/driver-ch340-para-arduino-chinos-o-genericos/?srsltid=AfmBOorHDHxkRfxt2n8idLw8O_7kmCPBaavJfe-5GAWVcD_2bNHU14v9 
 <img width="494" height="328" alt="image" src="https://github.com/user-attachments/assets/07321ca3-f296-418f-9cf9-1e8d992b66da" />
 
+<h1>Código</h1>
+Para comenzar con el código primero definiremos las librerias y variables que vamos a necesitar
+```cpp
+#include <Servo.h>
+
+const int IN1 = 3;  // Motor Izquierdo avance
+const int IN2 = 5;  // Motor Izquierdo retroceso
+const int IN3 = 6;  // Motor Derecho avance
+const int IN4 = 11; // Motor Derecho retroceso
+```
 
