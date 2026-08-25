@@ -35,3 +35,6 @@ Para este proyecto se va a necesitar un chasis 2wd que se puede conseguir facilm
 y por ultimo un protoboard para facilitar las conexiones
 
 ![](https://dcdn-us.mitiendanube.com/stores/648/727/products/oky0005-breadboard-11-6942049fe8d566d09915287576013319-640-0.webp)
+
+# Comenzando
+Para comenzar tenemos que hacer las conexiones necesarias para que el funcionamiento del robot sea el optimo
