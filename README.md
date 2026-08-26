@@ -100,3 +100,4 @@ void setup() {
 }
 
 ```
+La funcion void setup{} establece la configuracion inicial de los componentes como los pines de los motores por ejemplo cuando hacemos un pinMode(IN1, OUTPUT) le estamos diciendo al Arduino que configure ese pin y lo establezca como una salida, en el caso del servo, usando servo.attach(12), estamos estableciendo el pin 12 del Arduino para conectar el servomotor, en el caso de los pines del sensor ultrasonico establecemos pinMode(pinTrigger, OUTPUT) para que el Arduino sepa que mandamos una señal al exterior, que es el disparo del trigger y pinMode(pinEcho, INPUT) para que el receptor del sensor reciba la señal. Posteriormente le decimos al servomotor mediante servo.write(90) que mueva el eje del servomotor en un eje de 90° grados, teniendo en cuenta de que en este caso el servomotor que estamos usando es el modelo sg90 lo cual el eje maximo de rotación es de 180°
