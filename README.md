@@ -63,7 +63,7 @@ En caso de que no aparezca el arduino en algun puerto serie COM utilizaremos un 
 <h1>Código</h1>
 Para comenzar con el código primero definiremos las librerias y variables que vamos a necesitar
 
-```
+```cpp
 #include <Servo.h>
 
 const int IN1 = 3;  // Motor Izquierdo avance
@@ -72,5 +72,14 @@ const int IN3 = 6;  // Motor Derecho avance
 const int IN4 = 11; // Motor Derecho retroceso
 ```
 Vamos a incluir la libreria Servo.h que es una libreria que se utiliza para controlar servomotores con arduino, luego definieremos unas variables constantes enteras que van a hacer referencia a cada pin de entrada de los motores del l298n IN1,IN2,IN3,IN4, lo que nos va a permnitir cambiar los estados logicos de los motores. 
+
+```cpp
+
+const int pinTrigger = 8; 
+const int pinEcho = 9;
+
+int velocidad = 130;
+```
+Definimos el pin Trigger que es el disparador de la onda sonica que va a rebotar con el objeto y el pin echo que va a ser el receptor que va a recibir la onda previamente disparada, luego declaramos una variable para establecer la velocidad por defecto del robot que es 130 hasta 255
 
 
