@@ -101,3 +101,92 @@ void setup() {
 
 ```
 La funcion void setup{} establece la configuracion inicial de los componentes como los pines de los motores por ejemplo cuando hacemos un pinMode(IN1, OUTPUT) le estamos diciendo al Arduino que configure ese pin y lo establezca como una salida, en el caso del servo, usando servo.attach(12), estamos estableciendo el pin 12 del Arduino para conectar el servomotor, en el caso de los pines del sensor ultrasonico establecemos pinMode(pinTrigger, OUTPUT) para que el Arduino sepa que mandamos una señal al exterior, que es el disparo del trigger y pinMode(pinEcho, INPUT) para que el receptor del sensor reciba la señal. Posteriormente le decimos al servomotor mediante servo.write(90) que mueva el eje del servomotor en un eje de 90° grados, teniendo en cuenta de que en este caso el servomotor que estamos usando es el modelo sg90 lo cual el eje maximo de rotación es de 180°
+
+```cpp
+int MedirDistanciaPrecisa() {
+  const int MUESTRAS = 5;
+  long sumaDuraciones = 0;
+  int lecturasValidas = 0;
+
+  for (int i = 0; i < MUESTRAS; i++) {
+    digitalWrite(pinTrigger, LOW);
+    delayMicroseconds(2);
+    digitalWrite(pinTrigger, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(pinTrigger, LOW);
+    
+    long duracion = pulseIn(pinEcho, HIGH, 25000); // Timeout ~4 metros
+    
+    if (duracion > 0) {
+      sumaDuraciones += duracion;
+      lecturasValidas++;
+    }
+    delayMicroseconds(500); // Breve pausa entre pulso y pulso
+  }
+
+  if (lecturasValidas == 0) {
+    return 999; // Retorna valor alto si no hubo ecos válidos
+  }
+
+  long promedioDuracion = sumaDuraciones / lecturasValidas;
+  
+  // Fórmula precisa: distancia = (duración * 0.0343) / 2
+  // Que equivale a: duración / 58.3
+  return (int)(promedioDuracion / 58.3);
+}
+
+```
+Vamos a definir una función de tipo entera para medir la distancia del sensor ultrasonico, en la cual establecemos una variable para almacenar los disparos del trigger y otras dos variables para la clasificación de valores del sensor y para validar esas muestras, luego en el bucle for hacemos el proceso de disparar el trigger, con intervalos delayMicroseconds(2) y delayMicroseconds(10) en microsegundos para realizar el procedimiento, después almacenamos la duración del procedimiento al mismo tiempo que damos la orden de prender el pin Echo que es el receptor que recibe la onda rebotada del disparo. Finalmente validamos la duración para posteriormente clasificarla, evitar lecturas erroneas del sensor y devolver el calculo de la duración que tarda el sensor en disparar la onda ultrasonica y recibirla.
+
+```cpp
+int MirarIzquierda() {
+  servo.write(160);
+  delay(400); // Tiempo para que el servo llegue a la posición
+  int dist = MedirDistanciaPrecisa();
+  return dist;
+}
+
+int MirarDerecha() {
+  servo.write(20);
+  delay(400);
+  int dist = MedirDistanciaPrecisa();
+  return dist;
+}
+
+// --- FUNCIONES DE MOVIMIENTO CON CONTROL PWM ---
+void Avanzar() {
+  analogWrite(IN1, velocidad);
+  digitalWrite(IN2, LOW);
+  analogWrite(IN3, velocidad);
+  digitalWrite(IN4, LOW);
+}
+
+void Retroceder() {
+  digitalWrite(IN1, LOW);
+  analogWrite(IN2, velocidad);
+  digitalWrite(IN3, LOW);
+  analogWrite(IN4, velocidad);
+}
+
+void GirarDerecha() {
+  digitalWrite(IN1, LOW);
+  analogWrite(IN2, velocidad);
+  analogWrite(IN3, velocidad);
+  digitalWrite(IN4, LOW);
+}
+
+void GirarIzquierda() {
+  analogWrite(IN1, velocidad);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  analogWrite(IN4, velocidad);
+}
+
+void Stop() {
+  analogWrite(IN1, 0);
+  analogWrite(IN2, 0);
+  analogWrite(IN3, 0);
+  analogWrite(IN4, 0);
+}
+```
+Como paso final definiremos las funciones encargadas de controlar los motores y hacer que el robot se mueva.
