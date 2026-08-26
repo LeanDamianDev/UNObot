@@ -1,5 +1,5 @@
 # UNObot 
-Este proyecto se trata de un robot basico con Arduino Uno capaz de evitar obstaculos con sensor ultrasonico y un motor driver L298N que generalmente es el mas usado para proyectos educativos aunque reconozco que actualmente hay drivers mas eficientes. Este es unos de los proyectos mas típicos en el ambito de la robotica educativa 
+Este proyecto consiste en armar un robot basico con Arduino Uno capaz de evitar obstaculos con sensor ultrasonico y un motor driver L298N que generalmente es el mas usado para proyectos educativos, aunque reconozco que actualmente hay drivers mas eficientes. Este es unos de los proyectos mas típicos en el ambito de la robótica educativa 
 
 Para este proyecto se va a necesitar un chasis 2wd que se puede conseguir facilmente por internet.
 
@@ -13,11 +13,11 @@ Para este proyecto se va a necesitar un chasis 2wd que se puede conseguir facilm
 
 ![](https://hipercom.com.ar/wp-content/uploads/2021/10/D_940974-MLA40584109550_012020-F.jpg)
 
-- 2 Baterias 18650 (lo ideal es que sean Samsung marca original modelo INR-30Q que ofrecen una auotnomia mayor)
+- 2 Baterias 18650 (lo ideal es que sean Samsung marca original modelo INR-30Q, que ofrecen una autonomía mayor)
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXTqGe_s96ATthnhkoJ9-iLSO6T4XmZ-ltSTGFGlDwj-Y5OQTuBEnT_gw&s=10)
 
-- Un modulo l298n para controlar lo motores de corriente directa que es bastante accesible
+- Un módulo l298n para controlar lo motores de corriente directa que es bastante accesible
 
 ![](https://naylampmechatronics.com/148-superlarge_default/driver-puente-h-l298n.jpg)
 
@@ -40,7 +40,7 @@ y por ultimo un protoboard para facilitar las conexiones
 
 # Comenzando
 
-Para comenzar tenemos que hacer las conexiones necesarias para que el funcionamiento del robot sea el optimo, yo personalmente use fritzing para hacer el diagramado mas facil ya que tiene la funcionalidad de agregar componentes personalizados al circuito.
+Para comenzar tenemos que hacer las conexiones necesarias para que el funcionamiento del robot sea el optimo, yo personalmente use fritzing para hacer el diagramado mas fácil ya que tiene la funcionalidad de agregar componentes personalizados al circuito.
 
 <img width="3590" height="1985" alt="UNObot diagram" src="https://github.com/user-attachments/assets/25c66bd7-3b08-4f3e-905c-4052a4af8cda" />
 
@@ -81,5 +81,22 @@ const int pinEcho = 9;
 int velocidad = 130;
 ```
 Definimos el pin Trigger que es el disparador de la onda sonica que va a rebotar con el objeto y el pin echo que va a ser el receptor que va a recibir la onda previamente disparada, luego declaramos una variable para establecer la velocidad por defecto del robot que es 130 hasta 255
+```cpp
 
+void setup() {
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  
+  servo.attach(12);
+  
+  pinMode(pinTrigger, OUTPUT);
+  pinMode(pinEcho, INPUT);
+  
+  // Posición inicial: mirando al frente
+  servo.write(90);
+  delay(500);
+}
 
+```
